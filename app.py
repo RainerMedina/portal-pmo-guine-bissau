@@ -41,7 +41,7 @@ st.markdown("""
         color: #374151;
     }
 
-    /* 2. Barra de Alerta Institucional (Estilo Singapura) */
+    /* 2. Barra de Alerta Institucional */
     .gov-alert-bar {
         width: 100%;
         background-color: #eef2ff;
@@ -106,17 +106,17 @@ st.markdown("""
         line-height: 1.1;
     }
 
-    /* 4. Hero Split-Screen (Vermelho à Esquerda + Imagem à Direita) */
+    /* 4. Hero Split-Screen (Vermelho à Esquerda + Foto Oficial à Direita) */
     .hero-split {
         width: 100%;
         display: flex;
         flex-wrap: wrap;
-        min-height: 430px;
+        min-height: 440px;
         background-color: #b91c1c;
     }
     .hero-left {
         flex: 1 1 50%;
-        background-color: #b91c1c; /* Vermelho Institucional */
+        background-color: #b91c1c;
         color: #ffffff;
         padding: 60px 5% 60px 8%;
         display: flex;
@@ -139,11 +139,11 @@ st.markdown("""
     }
     .hero-right {
         flex: 1 1 50%;
-        min-height: 360px;
-        background-image: linear-gradient(to right, rgba(185, 28, 28, 0.25), rgba(17, 24, 39, 0.45)),
-                          url('https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=1200&q=80');
+        min-height: 380px;
+        background-image: linear-gradient(to right, rgba(185, 28, 28, 0.18), rgba(17, 24, 39, 0.35)),
+                          url('https://raw.githubusercontent.com/RainerMedina/portal-pmo-guine-bissau/main/primeiro-ministro.jpeg');
         background-size: cover;
-        background-position: center;
+        background-position: top center;
         display: flex;
         align-items: flex-end;
         padding: 28px;
@@ -318,7 +318,7 @@ tab_inicio, tab_pm, tab_governo, tab_imprensa, tab_contacto = st.tabs([
 # ABA 1: INÍCIO (COM HERO SPLIT FULL-SCREEN)
 # ==========================================
 with tab_inicio:
-    # Banner Hero de ponta a ponta (Vermelho à esquerda + Foto à direita)
+    # Banner Hero de ponta a ponta (Vermelho à esquerda + Foto Oficial à direita)
     st.markdown("""
     <div class="hero-split">
         <div class="hero-left">
@@ -331,7 +331,7 @@ with tab_inicio:
         </div>
         <div class="hero-right">
             <div class="hero-caption-box">
-                <strong>DISCURSO DE ABERTURA</strong><br>
+                <strong>CHEFIA DO GOVERNO</strong><br>
                 Presidência do Conselho de Ministros • Palácio do Governo, Bissau
             </div>
         </div>
@@ -376,10 +376,18 @@ with tab_pm:
     st.subheader("Chefia do Governo da República da Guiné-Bissau")
     c1, c2 = st.columns([1, 2])
     with c1:
+        st.image("https://raw.githubusercontent.com/RainerMedina/portal-pmo-guine-bissau/main/primeiro-ministro.jpeg", use_container_width=True)
         st.info("🏛️ **Palácio do Governo**\n\nPraça dos Heróis Nacionais\n\nBissau, Guiné-Bissau")
     with c2:
         st.markdown("""
+        ### Atribuições Constitucionais
         Nos termos da Constituição da República da Guiné-Bissau, o Primeiro-Ministro é o Chefe do Governo, competindo-lhe dirigir e coordenar a ação governativa e assegurar o funcionamento harmonioso das instituições da administração pública.
+
+        **Eixos Estratégicos do Executivo:**
+        1. **Boa Governação e Reforma da Administração Pública:** Digitalização dos serviços ao cidadão e rigor na gestão das finanças públicas.
+        2. **Diversificação Económica:** Valorização da produção agrícola, pescas e incentivo à transformação industrial local.
+        3. **Capital Humano:** Investimento contínuo na escola pública, no ensino técnico-profissional e no acesso universal aos cuidados de saúde.
+        4. **Diplomacia e Cooperação:** Fortalecimento dos laços históricos no seio da CPLP, CEDEAO, União Africana e Nações Unidas.
         """)
     st.markdown('</div>', unsafe_allow_html=True)
 
