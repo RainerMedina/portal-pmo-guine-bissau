@@ -1,7 +1,7 @@
 import streamlit as st
 
 # ==========================================
-# CONFIGURAÇÃO DA PÁGINA
+# CONFIGURAÇÃO DA PÁGINA (LARGURA TOTAL)
 # ==========================================
 st.set_page_config(
     page_title="Gabinete do Primeiro-Ministro | República da Guiné-Bissau",
@@ -11,175 +11,235 @@ st.set_page_config(
 )
 
 # ==========================================
-# ESTILIZAÇÃO INSTITUCIONAL (ESTILO PMO.GOV.SG)
+# CSS FULL-BLEED (100% DA TELA DE PONTA A PONTA)
 # ==========================================
 st.markdown("""
 <style>
-    /* Ocultar barra padrão do Streamlit para visual institucional limpo */
-    #MainMenu {visibility: hidden;}
-    header {visibility: hidden;}
-    footer {visibility: hidden;}
+    /* Remove margens e limites do Streamlit para preencher 100% do ecrã */
+    #MainMenu, header, footer {visibility: hidden;}
+    .stApp {
+        background-color: #ffffff;
+    }
     .block-container {
-        padding-top: 0rem;
-        padding-bottom: 2rem;
-        max-width: 1180px;
+        padding-top: 0rem !important;
+        padding-bottom: 0rem !important;
+        padding-left: 0rem !important;
+        padding-right: 0rem !important;
+        max-width: 100% !important;
+    }
+    [data-testid="stVerticalBlock"] {
+        gap: 0rem !important;
     }
 
-    /* Barra Superior Oficial .gov.gw */
+    /* 1. Barra Superior Oficial .gov.gw */
     .gov-masthead {
+        width: 100%;
         background-color: #f3f4f6;
         border-bottom: 1px solid #e5e7eb;
-        padding: 6px 20px;
+        padding: 6px 5%;
         font-size: 13px;
         color: #374151;
-        margin-bottom: 0px;
-        border-radius: 0 0 4px 4px;
+    }
+
+    /* 2. Barra de Alerta Institucional (Estilo Singapura) */
+    .gov-alert-bar {
+        width: 100%;
+        background-color: #eef2ff;
+        border-bottom: 1px solid #c7d2fe;
+        padding: 12px 5%;
+        font-size: 13.5px;
+        color: #1e3a8a;
+        display: flex;
+        align-items: center;
+        gap: 10px;
     }
 
     /* Faixa Tricolor Guiné-Bissau */
     .tricolor-bar {
+        width: 100%;
         height: 5px;
         background: linear-gradient(90deg, #CE1126 0%, #CE1126 33.3%, #FCD116 33.3%, #FCD116 66.6%, #009E49 66.6%, #009E49 100%);
-        margin-bottom: 20px;
     }
 
-    /* Cabeçalho Principal */
-    .pmo-header {
+    /* 3. Cabeçalho Branco Full-Width */
+    .pmo-navbar {
+        width: 100%;
+        background-color: #ffffff;
+        padding: 16px 5%;
+        border-bottom: 1px solid #e5e7eb;
         display: flex;
         align-items: center;
-        gap: 16px;
-        padding: 10px 0 20px 0;
-        border-bottom: 1px solid #e5e7eb;
+        justify-content: space-between;
+    }
+    .pmo-brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
     }
     .pmo-emblem {
-        width: 58px;
-        height: 58px;
+        width: 48px;
+        height: 48px;
         background-color: #CE1126;
         color: #000000;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 28px;
+        font-size: 24px;
         font-weight: bold;
         border: 3px solid #FCD116;
         flex-shrink: 0;
     }
     .pmo-title-sub {
-        font-size: 12px;
+        font-size: 11px;
         text-transform: uppercase;
         letter-spacing: 1.5px;
         color: #6b7280;
-        font-weight: 600;
+        font-weight: 700;
         margin: 0;
     }
     .pmo-title-main {
-        font-size: 26px;
-        font-weight: 700;
+        font-size: 22px;
+        font-weight: 800;
         color: #111827;
         margin: 0;
-        line-height: 1.2;
+        line-height: 1.1;
     }
 
-    /* Banner Hero (Destaque Principal) */
-    .hero-card {
-        background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
-        color: white;
-        padding: 36px;
-        border-radius: 6px;
-        border-left: 6px solid #CE1126;
-        margin: 20px 0 30px 0;
+    /* 4. Hero Split-Screen (Vermelho à Esquerda + Imagem à Direita) */
+    .hero-split {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        min-height: 430px;
+        background-color: #b91c1c;
     }
-    .hero-tag {
-        background-color: #FCD116;
-        color: #111827;
-        font-size: 11px;
-        font-weight: 700;
-        padding: 4px 10px;
-        border-radius: 3px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
+    .hero-left {
+        flex: 1 1 50%;
+        background-color: #b91c1c; /* Vermelho Institucional */
+        color: #ffffff;
+        padding: 60px 5% 60px 8%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
-    .hero-heading {
-        font-size: 28px;
-        font-weight: 700;
-        margin-top: 14px;
-        margin-bottom: 12px;
-        line-height: 1.3;
+    .hero-left h1 {
+        font-size: 42px;
+        font-weight: 800;
+        margin: 0 0 16px 0;
+        line-height: 1.15;
+        color: #ffffff;
     }
-    .hero-desc {
-        font-size: 15px;
-        color: #d1d5db;
-        line-height: 1.6;
-        max-width: 820px;
+    .hero-left p {
+        font-size: 18px;
+        line-height: 1.5;
+        color: #fee2e2;
+        margin: 0 0 28px 0;
+        max-width: 540px;
+    }
+    .hero-right {
+        flex: 1 1 50%;
+        min-height: 360px;
+        background-image: linear-gradient(to right, rgba(185, 28, 28, 0.25), rgba(17, 24, 39, 0.45)),
+                          url('https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=1200&q=80');
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: flex-end;
+        padding: 28px;
+    }
+    .hero-caption-box {
+        background: rgba(17, 24, 39, 0.85);
+        border-left: 4px solid #FCD116;
+        color: #ffffff;
+        padding: 12px 18px;
+        font-size: 13px;
+        border-radius: 2px;
     }
 
-    /* Cards de Notícias / Sala de Imprensa */
+    /* Container interno com respiro lateral elegante para o conteúdo abaixo do Hero */
+    .content-wrapper {
+        padding: 36px 5% 50px 5%;
+        background-color: #ffffff;
+    }
+
+    /* Cards da Sala de Imprensa */
     .news-card {
         background-color: #ffffff;
         border: 1px solid #e5e7eb;
-        border-top: 3px solid #009E49;
+        border-top: 4px solid #009E49;
         border-radius: 4px;
-        padding: 20px;
-        height: 100%;
-        margin-bottom: 12px;
+        padding: 22px;
+        margin-bottom: 14px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
     .news-meta {
         font-size: 12px;
-        color: #6b7280;
-        font-weight: 600;
+        color: #009E49;
+        font-weight: 700;
         text-transform: uppercase;
-        margin-bottom: 6px;
+        margin-bottom: 8px;
     }
     .news-title {
-        font-size: 17px;
+        font-size: 18px;
         font-weight: 700;
         color: #111827;
-        margin-bottom: 8px;
+        margin-bottom: 10px;
         line-height: 1.35;
     }
     .news-excerpt {
         font-size: 14px;
         color: #4b5563;
-        line-height: 1.5;
+        line-height: 1.55;
     }
 
-    /* Rodapé Oficial */
+    /* Estilização da barra de abas para parecer menu horizontal */
+    .stTabs [data-baseweb="tab-list"] {
+        padding: 0 5%;
+        background-color: #f9fafb;
+        border-bottom: 1px solid #e5e7eb;
+        gap: 24px;
+    }
+    .stTabs [data-baseweb="tab"] {
+        height: 48px;
+        font-weight: 600;
+        font-size: 15px;
+    }
+
+    /* Rodapé Full-Width */
     .pmo-footer {
+        width: 100%;
         background-color: #111827;
         color: #9ca3af;
-        padding: 32px 24px;
-        border-radius: 6px;
+        padding: 44px 5%;
+        font-size: 13.5px;
         margin-top: 40px;
-        font-size: 13px;
     }
     .pmo-footer h4 {
         color: #ffffff;
-        font-size: 15px;
-        margin-bottom: 10px;
+        font-size: 16px;
+        margin-bottom: 12px;
     }
 </style>
 """, unsafe_allow_html=True)
 
 # ==========================================
-# BASE DE DADOS (SALA DE IMPRENSA E ATOS)
+# BASE DE DADOS (COMUNICADOS E DISCURSOS)
 # ==========================================
 COMUNICADOS = [
     {
         "id": 1,
         "categoria": "Comunicados de Imprensa",
-        "data": "10 de Novembro de 2026",
+        "data": "12 de Novembro de 2026",
         "titulo": "Conselho de Ministros aprova Plano Nacional de Modernização Digital e Infraestruturas",
         "resumo": "O Executivo reuniu-se em Bissau para aprovar o pacote de investimentos destinado à digitalização dos serviços públicos e reabilitação das vias estruturantes.",
         "conteudo": """
-        **BISSAU, 10 de Novembro de 2026** — Reunido hoje em sessão ordinária no Palácio do Governo, o Conselho de Ministros, presidido por Sua Excelência o Primeiro-Ministro da República da Guiné-Bissau, aprovou o Plano Nacional de Modernização Digital e Infraestruturas (2026–2030).
+        **BISSAU, 12 de Novembro de 2026** — Reunido hoje em sessão ordinária no Palácio do Governo, o Conselho de Ministros, presidido por Sua Excelência o Primeiro-Ministro da República da Guiné-Bissau, aprovou o Plano Nacional de Modernização Digital e Infraestruturas (2026–2030).
 
         **Principais medidas aprovadas:**
         - Criação do Portal Único do Cidadão (`.gov.gw`) para emissão digital de documentos essenciais;
         - Reabilitação prioritária dos eixos rodoviários de escoamento da produção agrícola nas regiões de Bafatá, Gabú e Oio;
         - Reforço da transparência orçamental e auditoria trimestral às empresas públicas.
-
-        O Primeiro-Ministro sublinhou que a estabilidade institucional e a eficiência administrativa são pilares indispensáveis para atrair investimento direto e melhorar a qualidade de vida das famílias guineenses.
         """
     },
     {
@@ -190,13 +250,10 @@ COMUNICADOS = [
         "resumo": "Intervenção centrada na integração comercial regional, segurança alimentar e transição energética na África Ocidental.",
         "conteudo": """
         **Excelências, Chefes de Estado e de Governo,**
-        **Distintos Delegados,**
 
         A Guiné-Bissau apresenta-se hoje perante a nossa comunidade regional com uma mensagem clara de compromisso com a paz, a boa governação e a integração económica efetiva.
 
         O nosso país detém um potencial agrícola e marítimo extraordinário. Estamos a trabalhar para transformar a cadeia de valor do caju, modernizar o Porto de Bissau e garantir que a juventude guineense tenha acesso à formação técnica e ao empreendedorismo digital.
-
-        Reiteramos o nosso apelo à cooperação solidária entre os Estados-membros da CEDEAO para enfrentar os desafios climáticos e consolidar o desenvolvimento sustentável da nossa sub-região.
         """
     },
     {
@@ -206,35 +263,11 @@ COMUNICADOS = [
         "titulo": "Audiência com a Delegação da União Europeia e Parceiros de Desenvolvimento",
         "resumo": "Avaliação dos programas de cooperação nas áreas da educação, saúde materno-infantil e energias renováveis.",
         "conteudo": """
-        **BISSAU, 28 de Outubro de 2026** — Sua Excelência o Primeiro-Ministro recebeu hoje, no Palácio do Governo, uma delegação de alto nível composta por representantes da União Europeia e agências das Nações Unidas.
-
-        Durante o encontro, foram passados em revista os projetos em curso no domínio da eletrificação rural através de centrais solares e o reforço do equipamento hospitalar nas regiões do interior.
-
-        Ambas as partes reafirmaram o compromisso com o alinhamento das ajudas externas às prioridades definidas no Programa do Governo.
-        """
-    },
-    {
-        "id": 4,
-        "categoria": "Decretos e Leis",
-        "data": "19 de Outubro de 2026",
-        "titulo": "Decreto-Lei n.º 14/2026: Regime de Incentivos ao Investimento Agrícola e Agroindustrial",
-        "resumo": "Estabelece isenções fiscais e aduaneiras para unidades de transformação local de castanha de caju, arroz e frutas tropicais.",
-        "conteudo": """
-        **PRESIDÊNCIA DO CONSELHO DE MINISTROS**
-        **Decreto-Lei n.º 14/2026**
-
-        Considerando a necessidade imperiosa de fomentar a transformação industrial interna dos produtos agrícolas nacionais e reduzir a dependência das exportações em bruto, o Governo decreta:
-
-        - **Artigo 1.º (Objeto):** O presente diploma estabelece o regime especial de incentivos fiscais para projetos agroindustriais instalados em território nacional.
-        - **Artigo 2.º (Isenções Aduaneiras):** Ficam isentos de direitos de importação os equipamentos industriais e maquinarias destinados exclusivamente à transformação de produtos agrícolas locais.
-        - **Artigo 3.º (Entrada em vigor):** O presente Decreto-Lei entra imediatamente em vigor na data da sua publicação no Boletim Oficial.
+        **BISSAU, 28 de Outubro de 2026** — Sua Excelência o Primeiro-Ministro recebeu hoje, no Palácio do Governo, uma delegação de alto nível composta por representantes da União Europeia e agências das Nações Unidas para avaliar os projetos de eletrificação rural e equipamento hospitalar.
         """
     }
 ]
 
-# ==========================================
-# FUNÇÃO MODAL PARA LEITURA COMPLETA
-# ==========================================
 @st.dialog("Documento Oficial — Gabinete do Primeiro-Ministro", width="large")
 def abrir_documento(item):
     st.caption(f"{item['categoria'].upper()}  |  {item['data']}")
@@ -245,126 +278,117 @@ def abrir_documento(item):
     st.caption("Gabinete de Comunicação e Informação • Palácio do Governo, Bissau, República da Guiné-Bissau")
 
 # ==========================================
-# BARRA SUPERIOR OFICIAL (.GOV.GW) & IDIOMA
+# TOPO INSTITUCIONAL (.GOV.GW + AVISO)
 # ==========================================
 st.markdown("""
 <div class="gov-masthead">
     🇬🇼 <strong>Portal Oficial do Governo da República da Guiné-Bissau</strong>  |  Domínio institucional verificado (<code>.gov.gw</code>)
 </div>
+<div class="gov-alert-bar">
+    <span>ℹ️</span>
+    <span><strong>Aviso Oficial:</strong> Os membros do Governo nunca solicitam transferências financeiras nem dados bancários por telefone. Verifique sempre o endereço oficial <code>.gov.gw</code>.</span>
+</div>
 <div class="tricolor-bar"></div>
-""", unsafe_allow_html=True)
-
-col_logo, col_lang = st.columns([4, 1])
-
-with col_logo:
-    st.markdown("""
-    <div class="pmo-header" style="border-bottom: none; padding-bottom: 0;">
+<div class="pmo-navbar">
+    <div class="pmo-brand">
         <div class="pmo-emblem">★</div>
         <div>
             <p class="pmo-title-sub">República da Guiné-Bissau</p>
             <h1 class="pmo-title-main">Gabinete do Primeiro-Ministro</h1>
         </div>
     </div>
-    """, unsafe_allow_html=True)
-
-with col_lang:
-    st.write("")
-    idioma = st.selectbox(
-        "Idioma",
-        ["Português (Oficial)", "Krioulo", "Français"],
-        label_visibility="collapsed"
-    )
-
-st.divider()
+    <div style="font-size: 13px; color: #4b5563; font-weight: 600;">
+        PT  |  KRI  |  FR
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
 # ==========================================
-# NAVEGAÇÃO PRINCIPAL (ABAS ESTILO PMO.GOV.SG)
+# NAVEGAÇÃO HORIZONTAL FULL-WIDTH
 # ==========================================
 tab_inicio, tab_pm, tab_governo, tab_imprensa, tab_contacto = st.tabs([
     "Início",
     "O Primeiro-Ministro",
     "Conselho de Ministros",
     "Sala de Imprensa",
-    "Contactos e Serviços"
+    "Contactos"
 ])
 
 # ==========================================
-# ABA 1: INÍCIO
+# ABA 1: INÍCIO (COM HERO SPLIT FULL-SCREEN)
 # ==========================================
 with tab_inicio:
-    # Hero Banner
+    # Banner Hero de ponta a ponta (Vermelho à esquerda + Foto à direita)
     st.markdown("""
-    <div class="hero-card">
-        <span class="hero-tag">Prioridade Nacional</span>
-        <div class="hero-heading">Unidade, Estabilidade e Desenvolvimento Sustentável para a Guiné-Bissau</div>
-        <div class="hero-desc">
-            Acompanhe as decisões do Conselho de Ministros, os discursos oficiais, as políticas públicas e as iniciativas de modernização do Estado promovidas pela Chefia do Governo.
+    <div class="hero-split">
+        <div class="hero-left">
+            <h1>Gabinete do Primeiro-Ministro</h1>
+            <p>Destaque: Intervenção de Sua Excelência o Primeiro-Ministro sobre a Reforma Administrativa, Estabilidade e Desenvolvimento Económico da Guiné-Bissau.</p>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <span style="background: #ffffff; color: #b91c1c; padding: 10px 22px; font-weight: 700; border-radius: 3px; font-size: 14px;">Ler comunicado</span>
+                <span style="border: 1.5px solid #ffffff; color: #ffffff; padding: 10px 22px; font-weight: 700; border-radius: 3px; font-size: 14px;">Sala de Imprensa</span>
+            </div>
+        </div>
+        <div class="hero-right">
+            <div class="hero-caption-box">
+                <strong>DISCURSO DE ABERTURA</strong><br>
+                Presidência do Conselho de Ministros • Palácio do Governo, Bissau
+            </div>
         </div>
     </div>
     """, unsafe_allow_html=True)
 
-    # Barra de Pesquisa Rápida
-    busca = st.text_input(
-        "Pesquisar no portal",
-        placeholder="🔍 Pesquisar discursos, decretos, comunicados ou palavras-chave (ex: CEDEAO, Decreto, Infraestruturas)..."
-    )
+    # Conteúdo abaixo do banner com espaçamento lateral limpo
+    st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
+    
+    col_t, col_s = st.columns([2, 1])
+    with col_t:
+        st.subheader("Últimas Notícias e Comunicados")
+    with col_s:
+        busca = st.text_input("Pesquisar", placeholder="🔍 Pesquisar no portal...", label_visibility="collapsed")
 
-    st.subheader("Destaques da Sala de Imprensa")
-
+    st.write("")
     resultados = [
         c for c in COMUNICADOS
-        if busca.lower() in c["titulo"].lower() or busca.lower() in c["resumo"].lower() or busca.lower() in c["categoria"].lower()
+        if busca.lower() in c["titulo"].lower() or busca.lower() in c["resumo"].lower()
     ]
 
-    if not resultados:
-        st.info("Nenhum comunicado encontrado para o termo pesquisado.")
-    else:
-        cols = st.columns(2)
-        for idx, item in enumerate(resultados):
-            with cols[idx % 2]:
-                st.markdown(f"""
-                <div class="news-card">
-                    <div class="news-meta">{item['categoria']} • {item['data']}</div>
-                    <div class="news-title">{item['titulo']}</div>
-                    <div class="news-excerpt">{item['resumo']}</div>
-                </div>
-                """, unsafe_allow_html=True)
-                if st.button("Ler comunicado completo →", key=f"btn_home_{item['id']}"):
-                    abrir_documento(item)
+    cols = st.columns(3)
+    for idx, item in enumerate(resultados):
+        with cols[idx % 3]:
+            st.markdown(f"""
+            <div class="news-card">
+                <div class="news-meta">{item['categoria']} • {item['data']}</div>
+                <div class="news-title">{item['titulo']}</div>
+                <div class="news-excerpt">{item['resumo']}</div>
+            </div>
+            """, unsafe_allow_html=True)
+            if st.button("Ler artigo completo →", key=f"home_art_{item['id']}"):
+                abrir_documento(item)
+
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # ==========================================
 # ABA 2: O PRIMEIRO-MINISTRO
 # ==========================================
 with tab_pm:
+    st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
     st.subheader("Chefia do Governo da República da Guiné-Bissau")
     c1, c2 = st.columns([1, 2])
     with c1:
         st.info("🏛️ **Palácio do Governo**\n\nPraça dos Heróis Nacionais\n\nBissau, Guiné-Bissau")
-        st.markdown("""
-        **Atribuições Constitucionais:**
-        - Dirigir a política geral do Governo;
-        - Coordenar e orientar a ação de todos os Ministros;
-        - Representar o Governo perante a Assembleia Nacional Popular e instâncias internacionais.
-        """)
     with c2:
         st.markdown("""
-        ### Missão e Visão de Governação
         Nos termos da Constituição da República da Guiné-Bissau, o Primeiro-Ministro é o Chefe do Governo, competindo-lhe dirigir e coordenar a ação governativa e assegurar o funcionamento harmonioso das instituições da administração pública.
-
-        **Eixos Estratégicos do Executivo:**
-        1. **Boa Governação e Reforma da Administração Pública:** Digitalização dos serviços ao cidadão e rigor na gestão das finanças públicas.
-        2. **Diversificação Económica:** Valorização da produção agrícola, pescas e incentivo à transformação industrial local.
-        3. **Capital Humano:** Investimento contínuo na escola pública, no ensino técnico-profissional e no acesso universal aos cuidados de saúde.
-        4. **Diplomacia e Cooperação:** Fortalecimento dos laços históricos no seio da CPLP, CEDEAO, União Africana e Nações Unidas.
         """)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # ==========================================
 # ABA 3: CONSELHO DE MINISTROS
 # ==========================================
 with tab_governo:
+    st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
     st.subheader("Estrutura do Executivo e Ministérios")
-    st.write("Composição orgânica dos departamentos governamentais coordenados pelo Primeiro-Ministro:")
-
     ministerios = [
         ("Ministério dos Negócios Estrangeiros, Cooperação Internacional e das Comunidades", "Política externa, diplomacia e apoio à diáspora guineense."),
         ("Ministério das Finanças", "Orçamento Geral do Estado, política fiscal, tesouro e aduanas."),
@@ -375,74 +399,38 @@ with tab_governo:
         ("Ministério da Saúde Pública", "Rede hospitalar nacional, saúde preventiva e programas materno-infantis."),
         ("Ministério da Agricultura e Desenvolvimento Rural", "Segurança alimentar, apoio aos produtores e fileira do caju.")
     ]
-
     for nome, desc in ministerios:
         with st.expander(f"🏛️ {nome}"):
             st.write(desc)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # ==========================================
 # ABA 4: SALA DE IMPRENSA
 # ==========================================
 with tab_imprensa:
-    st.subheader("Arquivo Oficial de Comunicados, Discursos e Legislação")
-    filtro_cat = st.radio(
-        "Filtrar por categoria:",
-        ["Todas", "Comunicados de Imprensa", "Discursos", "Relações Internacionais", "Decretos e Leis"],
-        horizontal=True
-    )
-
-    filtrados = COMUNICADOS if filtro_cat == "Todas" else [c for c in COMUNICADOS if c["categoria"] == filtro_cat]
-
-    for item in filtrados:
+    st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
+    st.subheader("Sala de Imprensa e Arquivo Oficial")
+    for item in COMUNICADOS:
         with st.container(border=True):
-            col_txt, col_act = st.columns([4, 1])
-            with col_txt:
-                st.caption(f"**{item['categoria'].upper()}** | {item['data']}")
-                st.markdown(f"#### {item['titulo']}")
-                st.write(item["resumo"])
-            with col_act:
-                st.write("")
-                st.write("")
-                if st.button("Abrir", key=f"btn_news_{item['id']}", use_container_width=True):
-                    abrir_documento(item)
+            st.caption(f"**{item['categoria'].upper()}** | {item['data']}")
+            st.markdown(f"#### {item['titulo']}")
+            st.write(item["resumo"])
+            if st.button("Ler documento", key=f"news_btn_{item['id']}"):
+                abrir_documento(item)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # ==========================================
-# ABA 5: CONTACTOS E SERVIÇOS
+# ABA 5: CONTACTOS
 # ==========================================
 with tab_contacto:
-    st.subheader("Atendimento Institucional e Imprensa")
-    col_info, col_form = st.columns(2)
-
-    with col_info:
-        st.markdown("""
-        **Sede do Governo**
-        Palácio do Governo, Avenida Combatentes da Liberdade da Pátria
-        Caixa Postal 37, Bissau — República da Guiné-Bissau
-
-        **Horário de Expediente**
-        Segunda a Sexta-feira: 08h00 – 16h00 (GMT)
-
-        **Canais Oficiais**
-        - Gabinete de Imprensa: `imprensa@pmo.gov.gw`
-        - Protocolo de Estado: `protocolo@pmo.gov.gw`
-        """)
-
-    with col_form:
-        with st.form("form_contacto"):
-            st.write("**Enviar Mensagem ou Pedido de Informação**")
-            nome_c = st.text_input("Nome completo ou Entidade")
-            email_c = st.text_input("Endereço de e-mail")
-            assunto_c = st.selectbox("Assunto", ["Informação Geral", "Acreditação de Imprensa", "Pedido de Audiência", "Outro"])
-            msg_c = st.text_area("Mensagem")
-            enviado = st.form_submit_button("Submeter Mensagem")
-            if enviado:
-                if nome_c and email_c and msg_c:
-                    st.success("Mensagem registada com sucesso. O Gabinete de Atendimento responderá brevemente.")
-                else:
-                    st.warning("Por favor, preencha os campos obrigatórios.")
+    st.markdown('<div class="content-wrapper">', unsafe_allow_html=True)
+    st.subheader("Atendimento Institucional")
+    st.write("**Sede:** Palácio do Governo, Caixa Postal 37, Bissau — República da Guiné-Bissau")
+    st.write("**E-mail Institucional:** `imprensa@pmo.gov.gw`")
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # ==========================================
-# RODAPÉ INSTITUCIONAL
+# RODAPÉ FULL-WIDTH
 # ==========================================
 st.markdown("""
 <div class="pmo-footer">
@@ -456,7 +444,7 @@ st.markdown("""
             <p>Presidência da República • Assembleia Nacional Popular • Boletim Oficial</p>
         </div>
     </div>
-    <hr style="border-color: #374151; margin: 16px 0;">
+    <hr style="border-color: #374151; margin: 20px 0;">
     <p style="margin: 0; font-size: 12px;">© 2026 Governo da República da Guiné-Bissau. Todos os direitos reservados.</p>
 </div>
 """, unsafe_allow_html=True)
